@@ -16,7 +16,10 @@ class RfRemote extends React.Component {
             body: JSON.stringify({
                 switchNumbers: [switchNumber]
             })
-        });
+        })
+        .catch((error) => {
+            console.error("Error Sending RF Command. Error: ", error);
+        });;
     }
 
     renderButton(title:string, switchNumber:number) {
@@ -49,7 +52,7 @@ class RfRemote extends React.Component {
             <div>
                 <span className="component-header">RF Remote</span>
                 <div id='RfRemote'>
-                    {this.renderButton("Living Fan", 1)}
+                    {this.renderButton("Living Room Fan", 1)}
                     {this.renderButton("Living Room Lights", 2)}
                     {this.renderButton("Bed Room Lights", 3)}
                 </div>

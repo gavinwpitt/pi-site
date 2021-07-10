@@ -8,14 +8,16 @@ type MyProps = {
 type MyState = {
     temp: number;
     humidity: number;
+    gotWeatherReading: boolean
 };
 
 class CurrentTempDisplay extends React.Component<MyProps, MyState> {
     private interval:any;
 
     state: MyState = {
-        temp: -100,
-        humidity: 0
+        temp: 0,
+        humidity: 0,
+        gotWeatherReading: false
     };
 
     componentDidMount() {
@@ -40,28 +42,32 @@ class CurrentTempDisplay extends React.Component<MyProps, MyState> {
         .then((response) => {
             this.setState({
                 temp: this.state.temp = Math.floor(response.Temperature),
-                humidity: this.state.humidity = Math.floor(response.Humidity)
+                humidity: this.state.humidity = Math.floor(response.Humidity),
+                gotWeatherReading: true
             })
+        })
+        .catch((error) => {
+            console.error("Error Getting Weather Data. Error: ", error);
         });
     }
 
     render() {
-        const { temp } = this.state;
-        return temp != -100 ? (
+        const { gotWeatherReading, temp, humidity } = this.state;
+        return (
             <div>
                 <span className="component-header">Ambient Temperature</span>
                 <div id='WeatherDisplay'>
                     <span className="title">Temperature</span>
                     <div>
-                        <span id="Temp">{this.state.temp}°F</span>
+                        <span id="Temp">{(gotWeatherReading ? `${temp}°F` : "Loading Weather Data...")}</span>
                     </div>
                     <span className="title">Humidity</span>
                     <div>
-                        <span id="Humidity">{this.state.humidity}%</span>
+                        <span id="Humidity">{(gotWeatherReading ? `${humidity}%` : "Loading Weather Data...")}</span>
                     </div>            
                 </div>
             </div>
-        ) : <span>Loading weather data...</span>;
+        );
     }
 }
 
