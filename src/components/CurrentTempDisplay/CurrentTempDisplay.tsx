@@ -3,42 +3,65 @@ import './CurrentTempDisplay.css'
 import WeatherSensorReading from "../../types/WeatherSensorReading"
 
 type MyProps = {
-    message: string;
 };
 
 type MyState = {
     temp: number;
+    humidity: number;
 };
 
 class CurrentTempDisplay extends React.Component<MyProps, MyState> {
     private interval:any;
 
     state: MyState = {
-        temp: 0
+        temp: -100,
+        humidity: 0
     };
 
     componentDidMount() {
-        this.interval = setInterval(() => this.setState({ temp: this.state.temp = this.getTemperature().Temperature }), 1000 * 1);
+        this.fetchAndUpdateReading();
+        this.interval = setInterval(() => this.fetchAndUpdateReading(), 1000 * 30);
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
-    getTemperature() : WeatherSensorReading {
-        return {
-            "Temperature": 69,
-            "Humidity": 70,
-            "Pressure": 49.5
-        }
+    fetchAndUpdateReading() {
+        // Hard coding website for now I guess
+        fetch(`http://10.0.0.69:4001/weather/getCurrentRoomWeather`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => response.json())
+        .then((response) => {
+            this.setState({
+                temp: this.state.temp = Math.floor(response.Temperature),
+                humidity: this.state.humidity = Math.floor(response.Humidity)
+            })
+        });
     }
 
     render() {
-        return (
-        <div className='CurrentTempDisplay'>
-            {this.getTemperature().Temperature}
-        </div>
-        );
+        const { temp } = this.state;
+        return temp != -100 ? (
+            <div>
+                <span className="component-header">Ambient Temperature</span>
+                <div id='WeatherDisplay'>
+                    <span className="title">Temperature</span>
+                    <div>
+                        <span id="Temp">{this.state.temp}°F</span>
+                    </div>
+                    <span className="title">Humidity</span>
+                    <div>
+                        <span id="Humidity">{this.state.humidity}%</span>
+                    </div>            
+                </div>
+            </div>
+        ) : <span>Loading weather data...</span>;
     }
 }
 

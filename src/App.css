@@ -1,3 +1,10 @@
 body {
-    background-color: skyblue
+    background-color: skyblue;
+    text-align:center;
+    margin: 15px;
+}
+
+.component-header {
+    display: inline-block;
+    font-size: 30px;
 }
