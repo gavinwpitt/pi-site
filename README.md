@@ -2,11 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## ALL CODE IS ON MAIN, NOT MASTER
+
+### `git pull`
+
+### `git checkout main`
+
 ## Available Scripts
 
 Be sure to install first -Gavin
 
-### 'npm install'
+### `npm install`
 
 In the project directory, you can run:
 
