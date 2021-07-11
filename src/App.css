@@ -1,10 +1,18 @@
-body {
-    background-color: skyblue;
-    text-align:center;
-    margin: 15px;
+h1 {
+    @apply text-4xl font-bold;
 }
-
-.component-header {
-    display: inline-block;
-    font-size: 30px;
+h2 {
+    @apply text-3xl font-semibold;
+}
+h3 {
+    @apply text-2xl font-semibold;
+}
+h4 {
+    @apply text-xl font-semibold;
+}
+h5 {
+    @apply text-lg font-semibold;
+}
+p {
+    @apply text-base font-normal;
 }
