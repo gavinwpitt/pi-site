@@ -7,7 +7,7 @@ class RfRemote extends React.Component {
 
     makeRfCall(switchNumber:number, on:boolean) {
         // Hard coding website for now I guess
-        fetch(`http://10.0.0.69:4001/rfremote/${(on ? "ON" : "OFF")}`, {
+        fetch(`http://10.0.0.69:4000/rfremote/${(on ? "ON" : "OFF")}`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
